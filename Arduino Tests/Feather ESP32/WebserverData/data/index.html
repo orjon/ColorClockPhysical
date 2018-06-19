@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="description" content="site description goes here">
+    	<meta name="keywords" content="site, keywords, go, here">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1 ,user-scalable=no">
+		<title>Color Clock</title>
+		<link rel="shortcut icon" href="favicon.ico"/>
+
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+
+
+
+  <div class="icon1">
+    <img id="cog" src="images/icon-cog.png">
+    <div id="hands">
+        <img id="hour" src="images/icon-cog-hour.png"> 
+        <img id="minute" src="images/icon-cog-min.png"> 
+    </div>
+  </div>
+
+  <div class="icon-options">
+  	<img id="close"      src="images/icon-close.png">
+  	<div id="icon2">
+	    <img id="visibility"    src="images/icon-color1.png">
+	  	<img id="visibilityAlt" src="images/icon-color2.png">
+    </div>
+    <div id="icon3">
+		<img id="lock"          src="images/icon-lock1.png">
+		<img id="lockAlt"       src="images/icon-lock2.png">
+	</div>
+
+  </div>
+
+
+	    <div id="clock">
+	    	
+	    	<div id="indicators"> 
+	          <div class="twelveSix">
+	             <div class="indicator top twelve"></div>
+	             <div class="indicator bottom six"></div>
+	           </div>
+	          
+	           <div class="oneSeven">
+	             <div class="indicator top one"></div>
+	             <div class="indicator bottom seven"></div>
+	           </div>
+	          
+	          <div class="twoEight">
+	             <div class="indicator top two"></div>
+	             <div class="indicator bottom eight"></div>
+	           </div>
+	          
+	           <div class="threeNine">
+	             <div class="indicator top three"></div>
+	             <div class="indicator bottom nine"></div>
+	           </div>
+	          
+	          <div class="fourTen">
+	             <div class="indicator top four"></div>
+	             <div class="indicator bottom ten"></div>
+	           </div>
+	          
+	           <div class="fiveEleven">
+	             <div class="indicator top five"></div>
+	             <div class="indicator bottom eleven"></div>
+	           </div>
+	        </div>
+
+	        <div id="center" class="center"></div>
+
+	        <div id="indicatorRotator">
+	          <div class="twelveSix">
+	             <div class="indicator top twelve"></div>
+	             <div class="indicator bottom six"></div>
+	           </div>
+	          
+	           <div class="oneSeven">
+	             <div class="indicator top one"></div>
+	             <div class="indicator bottom seven"></div>
+	           </div>
+	          
+	          <div class="twoEight">
+	             <div class="indicator top two"></div>
+	             <div class="indicator bottom eight"></div>
+	           </div>
+	          
+	           <div class="threeNine">
+	             <div class="indicator top three"></div>
+	             <div class="indicator bottom nine"></div>
+	           </div>
+	          
+	          <div class="fourTen">
+	             <div class="indicator top four"></div>
+	             <div class="indicator bottom ten"></div>
+	           </div>
+	          
+	           <div class="fiveEleven">
+	             <div class="indicator top five"></div>
+	             <div class="indicator bottom eleven"></div>
+	           </div>
+	        </div>
+
+	    </div>
+<!-- 		<div id="title">Colour Clock</div> -->
+
+	    <div id="displayTime">the time is...</div>
+
+	    <footer>
+	      <div id="displaySize">screen width & height</div>
+		  <div id="displayCalculations">[ value calculations ]</div>
+	    </footer>
+
+	    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>

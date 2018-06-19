@@ -1,0 +1,143 @@
+
+.icon1 {
+  position: absolute;
+  height: 51px;
+  width: 51px;
+  right: 20px;
+  top: 20px;
+  transition:.75s;
+  animation: settingsIconBrightness 2s ease backwards;
+  animation-delay: 7.5s;
+}
+
+#cog {
+  position: absolute; 
+  opacity: 0.1;
+  transition:.75s;
+/*  animation: settingsIconBrightness 2s ease backwards;
+  animation-delay: 8s;*/
+}
+
+#hands {
+  opacity: 0.0;
+  transition:.75s;
+/*  animation: settingsIconBrightness 2s ease forwards;
+  animation-delay: 8s; */
+}
+
+#hour {
+  position: absolute;
+  transition:.75s; 
+}
+
+#minute {
+  position: absolute;
+  transition:.75s; 
+}
+
+.icon1:hover #hands{
+  opacity: 0.75;
+}
+
+.icon1:hover #cog{
+  opacity: 0.75;
+  transform: rotate(180deg);
+}
+
+.icon1:hover #hour{
+  transform: rotate(30deg);
+}
+.icon1:hover #minute{
+  transform: rotate(360deg);
+}
+
+
+.icon-options {
+  display: none;
+}
+
+#close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 10px;
+  width:  10px;
+  opacity:.5;
+  transition:.25s; 
+}
+
+
+#visibility {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  height: 51px;
+  width: 51px;
+  border-radius: 30px;
+  border: 2px solid white;
+  opacity:.5;
+  transition:.25s; 
+  display: block;
+}
+
+#visibilityAlt {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  height: 51px;
+  width: 51px;
+  border-radius: 30px;
+  border: 2px solid white;
+  opacity:.5;
+  transition:.25s; 
+  display: none;
+}
+
+
+#lock {
+  position: absolute;
+  right: 20px;
+  top: 80px;
+  height: 51px;
+  width: 51px;
+  border-radius: 30px;
+  border: 2px solid white;
+  opacity:.5;
+  transition:.25s; 
+  display: block;
+}
+
+#lockAlt {
+  position: absolute;
+  right: 20px;
+  top: 80px;
+  height: 51px;
+  width: 51px;
+  border-radius: 30px;
+  border: 2px solid white;
+  opacity: .5;
+  transition:.25s; 
+  display: none;
+}
+
+
+#visibility:hover {
+  opacity:1;
+}
+
+#visibilityAlt:hover {
+  opacity:1;
+}
+
+
+#lock:hover {
+ opacity:1;
+}
+
+#lockAlt:hover {
+ opacity:1;
+}
+
+#close:hover {
+ opacity:1;
+}

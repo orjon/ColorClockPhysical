@@ -1,0 +1,73 @@
+@keyframes centerAppear {
+  from{
+    opacity: 0;
+    width: 0;
+    height: 0;
+    border-radius: calc(var(--clockSize)/4);
+  }
+  to{
+    width: calc(var(--clockSize)/2);
+    height: calc(var(--clockSize)/2);
+    border-radius: calc(var(--clockSize)/4);
+    opacity: 1;
+  }
+}
+
+
+
+@keyframes indicatorSpin {
+  from{
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(3600deg);
+  }
+}
+
+.icon1 {
+  position: absolute;
+  height: 51px;
+  width: 51px;
+  right: 20px;
+  top: 20px;
+  transition:.75s; 
+}
+
+#cog {
+  position: absolute; 
+  opacity: 0.0;
+  transition:.75s;
+}
+
+
+
+
+
+@keyframes settingsIconSize{
+  from{
+    height:0px;
+    width: 0px;
+  }
+  to{
+    height:51px;
+    width: 51px;
+  }
+}
+
+
+@keyframes settingsIconBrightness{
+    0%   {opacity: 0.0}
+    100% {opacity: 0.1}
+}
+
+@keyframes indicatorExpand {
+  from{
+    opacity: 0;
+    height: calc(var(--clockSize)/2.75);
+  }
+  to{
+    opacity: 1;
+    height: var(--clockSize);
+  }
+}
+

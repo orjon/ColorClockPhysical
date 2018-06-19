@@ -1,0 +1,224 @@
+$(document).ready(function(){
+  
+  var timeIndex = 0;
+  var timeString = 0;
+  var colorIndex = 0;
+  var colorIndexShift = 0;
+  var tempIndexShift;
+  const center = 0;
+  const red = 0;
+  const grn = 1;
+  const blu = 2; 
+  var rgb = [0,100,200];
+  var clockColors = [rgb,rgb,rgb,rgb,rgb,rgb,rgb,rgb,rgb,rgb,rgb,rgb,rgb];
+
+
+  function map (num, in_min, in_max, out_min, out_max) {
+    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+  function checkWindowSize(){
+    var windowWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    widthHeight.textContent = windowWidth + 'W x ' +  windowHeight + 'H';
+     
+    if (windowWidth < windowHeight){
+      document.documentElement.style.setProperty('--clockSize', '73vw');
+    } else {
+       document.documentElement.style.setProperty('--clockSize', '73vh');
+    }
+   }
+
+  function colorShift(){
+    var i=1;
+    const indicatorDifference = 1530/12;
+
+    for (i = 1; i < (clockColors.length); i++) {
+      tempIndexShift = (colorIndexShift+(Math.round(i*indicatorDifference)));
+      if (tempIndexShift>1529) {
+          tempIndexShift=tempIndexShift-1530;
+      }
+      // console.log('i: ' + i + ' = ' + tempIndexShift);   
+      colorIndexToRGB(i, tempIndexShift);
+      arrayCheck(i);
+    }
+    arrayDump();
+   
+
+
+    // for (i = 1; i < clockColors.length; i++) { 
+    //     var tempIndexShift = (colorIndexShift+(Math.round(i*indicatorDifference)));
+    //       if (tempIndexShift>1529) {
+    //         tempIndexShift=tempIndexShift-1530;
+    //       }
+    //     console.log('i: ' + i + ' = ' + tempIndexShift);   
+    //     colorIndexToRGB(i, tempIndexShift);
+    //     arrayCheck(i);
+
+    // }
+
+    console.log('-test----------------');
+   console.log(clockColors[2][red] + ' ' + clockColors[2][grn] + ' ' + clockColors[2][blu]);
+
+    // var tempNumber = clockColors[1][red].toString() + ',' + clockColors[2][grn].toString() + ',' + clockColors[1][blu].toString();
+    i=1;
+    $("#one").css("background-color", 'rgb(' + clockColors[i][red] + ',' + clockColors[i][grn] + ',' + clockColors[i][blu] + ')');
+    i=2;
+    $("#two").css("background-color", 'rgb(' + clockColors[i][red] + ',' + clockColors[i][grn] + ',' + clockColors[i][blu] + ')');
+    $("#three").css("background-color", 'rgb(' + clockColors[3][red] + ',' + clockColors[3][grn] + ',' + clockColors[3][blu] + ')');
+    $("#four").css("background-color", 'rgb(' + clockColors[4][red] + ',' + clockColors[4][grn] + ',' + clockColors[4][blu] + ')');
+    $("#five").css("background-color", 'rgb(' + clockColors[5][red] + ',' + clockColors[5][grn] + ',' + clockColors[5][blu] + ')');
+    $("#six").css("background-color", 'rgb(' + clockColors[6][red] + ',' + clockColors[6][grn] + ',' + clockColors[6][blu] + ')');
+    $("#seven").css("background-color", 'rgb(' + clockColors[7][red] + ','+ clockColors[7][grn] + ',' + clockColors[7][blu] + ')');
+    $("#eight").css("background-color", 'rgb(' + clockColors[8][red] + ',' + clockColors[8][grn] + ',' + clockColors[8][blu] + ')');
+    $("#nine").css("background-color", 'rgb(' + clockColors[9][red] + ',' + clockColors[9][grn] + ',' + clockColors[9][blu] + ')');
+    $("#ten").css("background-color", 'rgb(' + clockColors[10][red] + ',' + clockColors[10][grn] + ',' + clockColors[10][blu] + ')');
+    $("#eleven").css("background-color", 'rgb(' + clockColors[11][red] + ',' + clockColors[11][grn] + ',' + clockColors[11][blu] + ')');
+    $("#twelve").css("background-color", 'rgb(' + clockColors[12][red] + ',' + clockColors[12][grn] + ',' + clockColors[12][blu] + ')');
+  }
+
+
+
+  function colorIndexToRGB(segment, index) {
+    const maxValue = 255;
+
+    if (index <= 255 ) { 
+      clockColors[segment][red] = maxValue; 
+      clockColors[segment][grn] = index; 
+      clockColors[segment][blu] = 0;
+      return;
+      }
+    
+    if ((index > 255) && (index <= 510)) { 
+      clockColors[segment][red] = maxValue-(index-(255)); 
+      clockColors[segment][grn] = maxValue; 
+      clockColors[segment][blu] =0;
+      return;
+      }
+      
+    if ((index > 510) && (index <= 765)) {
+      clockColors[segment][red] =0; 
+      clockColors[segment][grn] =maxValue; 
+      clockColors[segment][blu] =(index-(510));
+      return;
+      }
+      
+    if ((index > 765) && (index <= 1020)) {
+      clockColors[segment][red] =0; 
+      clockColors[segment][grn] =maxValue-(index-(765)); 
+      clockColors[segment][blu] =maxValue;
+      }
+      
+    if ((index > 1020) && (index <= 1275)) {
+      clockColors[segment][red] =(index-(1020)); 
+      clockColors[segment][grn] =0; 
+      clockColors[segment][blu] =maxValue;
+      return;
+      }
+      
+    if ((index > 1275) && (index <= 1530)) { 
+      clockColors[segment][red] = maxValue;
+      clockColors[segment][grn] =0;
+      clockColors[segment][blu] = maxValue-(index-(1275));
+      return;
+      }
+  }
+
+
+  function arrayCheck(segment){
+     console.log('segment ' + segment + ' - R' + clockColors[segment][red]+ ' G' + clockColors[segment][grn] + ' B' + clockColors[segment][blu]);
+  }
+
+
+  function arrayDump(){
+    var segment;
+    console.log('ArrayDump');
+    for (segment = 1; segment < clockColors.length; segment++) {
+     console.log('i: ' + segment + ' - R' + clockColors[segment][red] + ' G' + clockColors[segment][grn] + ' B' + clockColors[segment][blu]);
+    }
+  }
+
+
+  function updateText(){
+    timeDisplay.textContent = timeString;
+    calculationDisplay.textContent = 'Index:' + timeIndex + ' | Shift:' + colorIndexShift + ' | Color:' + colorIndex + ' | R' + clockColors[center][red] +' G' + clockColors[center][grn] +' B' + clockColors[center][blu];
+  }
+
+
+  function updateClock(){
+    colorShift();
+    checkWindowSize();
+    updateTime();
+    updateText();
+    colorIndexToRGB(center,colorIndex);
+    arrayCheck(center);
+    $("#center").css("background-color", 'rgb(' + clockColors[center][red] + ',' + clockColors[center][grn] + ',' + clockColors[center][blu] + ')');
+  }
+
+
+
+
+  function updateTime() {
+    var time = new Date();
+    var hours = time.getHours() % 12;
+    var minutes = time.getMinutes();
+    var seconds = time.getSeconds();
+    
+    timeIndex = (hours*60*60) + (minutes*60) + seconds;    //Stores unique 12hr time id based on number of seconds = (HOURS*60*60) + (MINUTES*60) + (SECONDS)
+    colorIndex = Math.round(map(timeIndex,0, 43199, 0, 1529));
+
+    colorIndex = colorIndex + colorIndexShift;
+    if (colorIndex>1529) {
+      colorIndex = colorIndex - 1530;
+    }
+
+    var hours = time.getHours().toString();
+    var minutes = minutes.toString();
+    var seconds = seconds.toString();
+    
+    if (hours.length < 2) {
+      hours = '0' + hours;     //display padding
+    }
+
+    if (minutes.length < 2) {
+      minutes = '0' + minutes; //display padding
+    }
+
+    if (seconds.length < 2) {
+      seconds = '0' + seconds; //display padding
+    }
+
+    timeString = hours + ':' + minutes + ':' + seconds;
+  }
+
+
+
+
+// colorShift();
+
+  checkWindowSize();
+  window.onresize = function(){checkWindowSize();};
+
+  
+  $("#rotateCW").on('click', function(){
+    console.log('RotateCW');
+    colorIndexShift++;
+    if (colorIndexShift>1529) {
+      colorIndexShift=0;
+    }
+    colorShift();
+  });
+
+  // $('#rotateCCW').on('click', function(){
+  //   console.log('RotateCCW');
+  //   colorIndexShift--;
+  //   if (colorIndexShift<0) {
+  //     colorIndexShift=1529;
+  //   }
+  //   colorShift();
+  // });
+
+  setInterval(updateClock, 1000);
+
+
+});

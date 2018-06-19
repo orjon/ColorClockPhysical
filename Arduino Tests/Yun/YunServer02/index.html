@@ -1,0 +1,551 @@
+<html>
+<head>
+    <title>Arduino Yun Trigger</title>
+ 
+    <link rel="stylesheet" href="jquery.mobile-1.4.2.min.css" />
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="jquery.mobile-1.4.2.min.js"></script>
+    <script src="localStore_v1.js"></script> 
+ 
+ 
+ 
+    <STYLE type="text/css">
+        .boxouter {
+            position:relative;
+            margin-bottom:16px;
+            padding:10px;
+            width:214px;
+            background-color:#CAD6EB;
+            border-radius:5px;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+        }
+ 
+        .colleft {
+            position: absolute; 
+            left: 25%;
+            top: 60px;
+        }
+ 
+ 
+        .boxstate {
+            position:absolute;	
+            top:3px;
+            width:110px;
+            color:#ff6d08;
+            margin-top:3px;
+            margin-bottom:3px;
+            text-align:center;
+            padding:4px;
+            margin-left:100px;
+            background-color:#48b;
+            border-radius:5px;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+        }
+ 
+ 
+ 
+ 
+        .all_load {
+            width:200px;
+            height:auto;
+            top:50%;
+            left:50%;
+            padding:60px;
+            position:absolute;
+            margin-left:-160px; 
+            margin-top:-60px;	
+            text-align:center;
+            background-color:#bbb;
+            border-radius:5px;	
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+            filter: alpha(opacity=85);
+            opacity:0.85;
+            -webkit-opacity:0.85;
+            -moz-opacity:0.85;
+            z-index:999;
+            visibility:hidden	
+        }
+ 
+    </STYLE>
+ 
+ 
+ 
+    <script language="JavaScript" type="text/JavaScript"> 
+ 
+        //Begin
+        $(document).ready(function(e) {
+ 
+        //var def_url = $('#ml_yunserver').val();
+        var def_url =window.localStorage.getItem("devicehostname");
+        //alert (def_url);
+        //$.ajaxSetup({ cache: false }); 
+        $.ajaxSetup({ cache: false , scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
+        $('#smartembeddedyun').hide();
+ 
+        var isAutoRefreshP4 = false;
+        var timerP4;
+ 
+        var isAutoRefreshP5 = false;
+        var timerP5;
+        populate_page2();
+        initpage2();        
+        function populate_page2()
+        {
+        $('#setdigital_io').empty();    
+ 
+ 
+        for (var i=2;i<=13;i++)
+        {
+        var labStr = "D"+i.toString();
+ 
+        $('#setdigital_io').append('<div id="radiogroup'+i+'" data-role="fieldcontain"><fieldset data-role="controlgroup" data-type="horizontal" data-mini="false"><legend>'+labStr+'</legend><input type="radio" name="radio-choice-d'+i+'" id="radio-choice-d'+i+'1" value="choice-'+i+'1" checked="checked"/><label for="radio-choice-d'+i+'1">Output</label><input type="radio" name="radio-choice-d'+i+'" id="radio-choice-d'+i+'2" value="choice-'+i+'2"/><label for="radio-choice-d'+i+'2">Input</label><input type="radio" name="radio-choice-d'+i+'" id="radio-choice-d'+i+'3" value="choice-'+i+'3"/><label for="radio-choice-d'+i+'3">Input (PU)</label></fieldset></div>'   );
+        }
+ 
+        $('#setdigital_io').trigger('create');  
+ 
+        blankpage2();   
+ 
+        }
+        $('#callinitp2').click(function() {initpage2();});
+ 
+        function initpage2()
+        {
+        $('#smartembeddedyun').html('...Loading');
+        $('#smartembeddedyun').show();
+ 
+        $.getJSON(def_url+"/arduino/in/",function(data){       
+        //alert(data);
+        var j=2;
+        $.each(data.Datadir,            
+        function (key,value)
+        { 	
+        //alert (key+""+value);
+        if (value.datadir==0) {$('#radio-choice-d'+j+'1').prop("checked",true).checkboxradio( "refresh" );}else{$('#radio-choice-d'+j+'1').prop("checked",false).checkboxradio( "refresh" );}
+        if (value.datadir==1) {$('#radio-choice-d'+j+'2').prop("checked",true).checkboxradio( "refresh" );}else{$('#radio-choice-d'+j+'2').prop("checked",false).checkboxradio( "refresh" );}
+        if (value.datadir==2) {$('#radio-choice-d'+j+'3').prop("checked",true).checkboxradio( "refresh" );}else{$('#radio-choice-d'+j+'3').prop("checked",false).checkboxradio( "refresh" );}
+        j++;
+        });
+        $('#smartembeddedyun').hide();
+        }); 
+        }
+        function blankpage2()
+        {
+        for (var j=2;j<=13;j++)
+        {
+        $('#radio-choice-d'+j+'1').prop("checked",false).checkboxradio( "refresh" );
+        $('#radio-choice-d'+j+'2').prop("checked",false).checkboxradio( "refresh" );
+        $('#radio-choice-d'+j+'3').prop("checked",false).checkboxradio( "refresh" );
+        }
+        }
+ 
+        $('#save_io').click(function() {
+ 
+        var urlStr=def_url+"/arduino"+doSaveStateDir();
+        //alert(urlStr);
+ 
+        $('#smartembeddedyun').html('...Saving');
+        $('#smartembeddedyun').show();
+ 
+        $.getJSON(urlStr,function(data){
+        //alert(data);
+        $('#smartembeddedyun').hide();
+        });
+        });
+ 
+ 
+ 
+        function doSaveStateDir(){
+ 
+        var RVal="/io/";
+        for (var j=2;j<=13;j++)
+        {
+        RVal+=getRadioStateDDir('#radio-choice-d'+j);
+        }
+        RVal+="/";
+ 
+        return RVal;
+        }           
+        function getRadioStateDDir(RGSelection)
+        {
+        var k=0;
+        k=1*Number($(RGSelection+'1').prop("checked"));
+        k+=2*Number($(RGSelection+'2').prop("checked"));
+        k+=3*Number($(RGSelection+'3').prop("checked"));
+        return (k-1).toString();    
+        }       
+        $('#callinitp3').click(function() {initpage3();});
+        function initpage3()
+        {
+        $('#smartembeddedyun').html('...Loading');
+        $('#smartembeddedyun').show();
+        $.getJSON(def_url+"/arduino/in/",function(data){
+        //alert(data);
+        $('#setdigital_vals').empty();  
+        var j=2;
+        $.each(data.Digital,
+        function (key,value)    
+        {
+        //alert (key+""+value);
+        var labStr = "D"+j.toString();
+ 
+        if (value.dataval==0 || value.dataval==1)   
+        {
+        $('#setdigital_vals').append('<div id="radiogroup'+j+'" data-role="fieldcontain"><fieldset data-role="controlgroup" data-type="horizontal" data-mini="false"><legend>'+labStr+'</legend><input type="radio" name="radio-val-d'+j+'" id="radio-val-d'+j+'1" value="val-'+j+'1" checked="checked"/><label for="radio-val-d'+j+'1">High</label><input type="radio" name="radio-val-d'+j+'" id="radio-val-d'+j+'2" value="val-'+j+'2"/><label for="radio-val-d'+j+'2">Low</label></fieldset></div>' );
+ 
+        $('#setdigital_vals').trigger('create');
+ 
+        if (value.dataval==1) {$('#radio-val-d'+j+'1').prop("checked",true).checkboxradio( "refresh" );}else{$('#radio-val-d'+j+'1').prop("checked",false).checkboxradio( "refresh" );}
+        if (value.dataval==0) {$('#radio-val-d'+j+'2').prop("checked",true).checkboxradio( "refresh" );}else{$('#radio-val-d'+j+'2').prop("checked",false).checkboxradio( "refresh" );}
+ 
+        }
+ 
+        j++;
+        });
+ 
+        $('#smartembeddedyun').hide();
+ 
+        }); 
+        $('#setdigital_vals').trigger('create');    
+ 
+ 
+ 
+        }
+        $('#change_io').click(function() {
+ 
+        var urlStr=def_url+"/arduino"+doSaveStateOut();
+ 
+        $('#smartembeddedyun').html('...Saving');
+        $('#smartembeddedyun').show();
+        $.getJSON(urlStr,function(data){
+        //alert(data);
+        $('#smartembeddedyun').hide();
+        });
+        });
+ 
+ 
+ 
+        function doSaveStateOut(){
+ 
+        var RVal="/do/";
+ 
+        for (var j=2;j<=13;j++)
+        {
+        if ($('#radio-val-d'+j+'1').length>0)
+        {
+        RVal+=getRadioStateDVal('#radio-val-d'+j);
+        }
+        else
+        {
+        RVal+="-";
+        }
+        }   
+        RVal+="/";
+ 
+        return RVal;
+        }
+ 
+ 
+ 
+        function getRadioStateDVal(RGSelection)
+        {
+        var k=0;
+        k=1*Number($(RGSelection+'2').prop("checked"));
+        k+=2*Number($(RGSelection+'1').prop("checked"));
+        return (k-1).toString();    
+        }
+        $('#callinitp4').click(function() {initpage4(0);});
+ 
+        function initpage4(option)
+        {
+        $('#smartembeddedyun').html('...Loading');
+        if (option==0)  $('#smartembeddedyun').show();
+ 
+ 
+        $.getJSON(def_url+"/arduino/in/",function(data){
+        $('#readdigital_vals').empty(); 
+        //alert(data);
+        var j=2;
+        $.each(data.Digital,
+        function (key,value)    
+        {
+        //alert (key+""+value);
+        var labStr = "D"+j.toString();
+ 
+        if (value.dataval==10 || value.dataval==11) 
+        {
+        if (value.dataval==10)  
+{$('#readdigital_vals').append(
+'<div class="boxouter">'+labStr+':<div class="boxstate">Low</div></div>');}
+        else                    
+{$('#readdigital_vals').append(
+'<div class="boxouter">'+labStr+':<div class="boxstate">High</div></div>');}
+ 
+        }
+ 
+        j++;
+        });
+ 
+        $('#readdigital_vals').append('<br><br>');
+        $('#smartembeddedyun').hide();
+        }); 
+ 
+        }
+ 
+ 
+        $('#refresh_dinp4').click(function() {initpage4(0); });
+ 
+        $('#backfromp4').click(function() {
+        if (isAutoRefreshP4)
+        {
+        isAutoRefreshP4=false;
+        $('#autorefresh_dinp4').html("Auto-refresh is OFF");
+        $('#refresh_dinp4').show();
+        clearInterval(timerP4);
+        }
+        });
+ 
+        $('#autorefresh_dinp4').click(function() {
+        if (!isAutoRefreshP4)
+        {
+        isAutoRefreshP4=true;
+        $('#autorefresh_dinp4').html("Auto-refresh is ON");
+        $('#refresh_dinp4').hide();
+        timerP4=setInterval(function(){
+        initpage4(1);
+        },8000);
+        }
+        else
+        {
+        isAutoRefreshP4=false;
+        $('#autorefresh_dinp4').html("Auto-refresh is OFF");
+        $('#refresh_dinp4').show();
+        clearInterval(timerP4);
+        }
+        });
+ 
+        $('#callinitp5').click(function() {initpage5(0);});
+ 
+ 
+        function initpage5(option)
+        {
+ 
+        $('#smartembeddedyun').html('...Loading');
+        if (option==0)  $('#smartembeddedyun').show();
+ 
+ 
+        $.getJSON(def_url+"/arduino/in/",function(data){
+        //alert(data);
+        $('#readanalogue_vals').empty();    
+        var j=0;
+        $.each(data.Analog,
+        function (key,value)   
+        {
+        //alert (key+""+value);
+        var labStr = "A"+j.toString();
+        {$('#readanalogue_vals').append('<div class="boxouter">'+labStr+':<div class="boxstate">'+value.dataval+'</div></div>');}
+ 
+        j++;
+        });
+        $('#readanalogue_vals').append('<br><br>');
+        $('#smartembeddedyun').hide();
+        }); 
+ 
+        }
+ 
+ 
+        $('#refresh_dinp5').click(function() {initpage5(0); });
+ 
+ 
+ 
+        $('#backfromp5').click(function() {
+        if (isAutoRefreshP5)
+        {
+        isAutoRefreshP5=false;
+        $('#autorefresh_dinp5').html("Auto-refresh is OFF");
+        $('#refresh_dinp5').show();
+        clearInterval(timerP5);
+        }
+        });
+ 
+ 
+        $('#autorefresh_dinp5').click(function() {
+        if (!isAutoRefreshP5)
+        {
+        isAutoRefreshP5=true;
+        $('#autorefresh_dinp5').html("Auto-refresh is ON");
+        $('#refresh_dinp5').hide();
+        timerP5=setInterval(function(){
+        initpage5(1);
+        },8000);
+        }
+        else
+        {
+        isAutoRefreshP5=false;
+        $('#autorefresh_dinp5').html("Auto-refresh is OFF");
+        $('#refresh_dinp5').show();
+        clearInterval(timerP5);
+        }
+        });
+ 
+ 
+        });
+ 
+ 
+ 
+        //End
+ 
+ 
+ 
+    </script>
+ 
+    </head>
+    <body oncontextmenu="return false;">
+ 
+ 
+    <div class="all_load" id="smartembeddedyun" >
+        ...Loading/Saving
+    </div>
+ 
+    <div data-role="page" id="page">
+        <div data-role="header">
+            <h1> Arduino Yun DashBoard Controller</h1>
+        </div>
+ 
+        <div data-role="content">
+            This is your dashboard of Yun controller.<p>
+            To work, you must first upload the sketch code below.<p>
+            Then you choose following options: 
+            <ul>
+                <li>1-Set the data direction of the digital pins</li>
+                <li>2-Set digital output values to High or Low</li>
+                <li>3-Read digital input values</li>
+                <li>4-Read analog input values</li>
+            </ul>
+        </div>
+ 
+        <div data-role="content">
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#page2" id="callinitp2">Digital pin in/out settings</a></li>
+                <li><a href="#page3" id="callinitp3">Set digital pin output values</a></li>
+                <li><a href="#page4" id="callinitp4">Read digital pin input values</a></li>
+                <li><a href="#page5" id="callinitp5">Read analogue pin input values</a></li>
+            </ul>		
+        </div>
+ 
+        <div data-role="content">
+            <br>
+ 
+            Data is real time compatibly to small amount of time to update the data due to 
+transfer and set values on board.
+            Upload following sketch on your board to work with dashboard.
+ 
+         <br>
+         <a href="sketch_dashboard.ino.txt" data-role="button" data-inline="true" target="_blank">
+Get Sketch Code to Upload on Board </a>
+ 
+        </div>
+ 
+        <div data-role="footer" data-position="fixed">
+            <h4>Arduino Yun DashBoard</h4>
+        </div>
+    </div>
+ 
+    <div data-role="page" id="page2">
+        <div data-role="header"  data-position="fixed">
+            <a href="#page" data-icon="delete" data-rel="back">Cancel</a>
+            <h1>Digital pin settings</h1>
+            <a href="#page" id="save_io" data-icon="check">Save</a>
+        </div>
+        <div data-role="content">	
+            <div id="setdigital_io">
+            </div>	
+ 
+        </div>
+ 
+    </div>
+ 
+    <div data-role="page" id="page3">
+        <div data-role="header" data-position="fixed">
+            <a href="#page" data-icon="delete" data-rel="back">Back</a>
+            <h1>Set digital pin outputs</h1>
+            <a href="#" id="change_io" data-icon="check">Update</a>
+        </div>
+        <div data-role="content">	
+            <div id="setdigital_vals">
+            </div>		
+ 
+ 
+        </div>
+ 
+ 
+ 
+    </div>
+ 
+    <div data-role="page" id="page4">
+        <div data-role="header" data-position="fixed">
+            <a href="#page" id="backfromp4" data-icon="back" data-rel="back">Back</a>
+            <h1>Digital input pin values</h1>
+            <a href='#' id="refresh_dinp4" data-icon="refresh">Refresh</a>
+        </div>
+        <div data-role="content">	
+ 
+            <div class="colleft" id="readdigital_vals">
+                <div class="boxouter">D2:<div class="boxstate">High</div></div>
+                <div class="boxouter">D3:<div class="boxstate">Low</div></div>
+                <div class="boxouter">D4:<div class="boxstate">High</div></div>
+                <div class="boxouter">D5:<div class="boxstate">Low</div></div>
+                <div class="boxouter">D6:<div class="boxstate">High</div></div>
+                <div class="boxouter">D7:<div class="boxstate">Low</div></div>
+                <div class="boxouter">D8:<div class="boxstate">High</div></div>
+                <div class="boxouter">D9:<div class="boxstate">Low</div></div>
+                <div class="boxouter">D10:<div class="boxstate">High</div></div>
+                <div class="boxouter">D11:<div class="boxstate">Low</div></div>
+                <div class="boxouter">D12:<div class="boxstate">High</div></div>
+                <div class="boxouter">D13:<div class="boxstate">Low</div></div>
+ 
+            </div>
+ 
+ 
+        </div>
+        <div data-role="footer" data-position="fixed" 
+style="margin:0 auto; margin-left:auto; margin-right:auto; align:center;text-align:center;">
+            <a href='#' id="autorefresh_dinp4" data-icon="gear" >Auto-refresh is OFF</a>
+        </div>
+ 
+ 
+ 
+    </div>
+ 
+ 
+    <div data-role="page" id="page5">
+        <div data-role="header" data-position="fixed">
+            <a href="#page" id="backfromp5" data-icon="back" data-rel="back">Back</a>
+            <h1>Analogue pin input values</h1>
+            <a href='#' id="refresh_dinp5" data-icon="refresh">Refresh</a>
+        </div>
+        <div data-role="content">	
+ 
+            <div class="colleft" id="readanalogue_vals">
+                <div class="boxouter">A0:<div class="boxstate">1024</div></div>
+                <div class="boxouter">A1:<div class="boxstate">835</div></div>
+                <div class="boxouter">A2:<div class="boxstate">546</div></div>
+                <div class="boxouter">A3:<div class="boxstate">621</div></div>
+                <div class="boxouter">A4:<div class="boxstate">101</div></div>
+                <div class="boxouter">A5:<div class="boxstate">23</div></div>
+ 
+            </div>
+ 
+ 
+        </div>
+        <div data-role="footer" data-position="fixed" 
+style="margin:0 auto; margin-left:auto; margin-right:auto; align:center;text-align:center;">
+            <a href='#' id="autorefresh_dinp5" data-icon="gear" >Auto-refresh is OFF</a>
+        </div>
+    </div>
+</div>
+ 
+</body>
+</html>

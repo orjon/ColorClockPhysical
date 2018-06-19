@@ -1,0 +1,271 @@
+/* 
+Project Name: Blank Template
+Client: Your Client
+*/
+/******************************************
+/* COLOURS
+/*******************************************/
+/* add a list of colours used in the project */
+/******************************************
+/* SENSIBLE DEFAULTS                   
+/*******************************************/
+* {
+  box-sizing: border-box; }
+
+img {
+  max-width: 100%; }
+
+/******************************************
+/* TYPOGRAPHY
+/*******************************************/
+/* add type styles here */
+/******************************************
+/* LAYOUT                   
+/*******************************************/
+:root {
+  --Gray: #949494;
+  /*  --one: #ff8000;
+    --two: #ffff00;
+    --three: #80ff00;
+    --four: #00ff00;
+    --five: #00ff80;
+    --six: #00ffff;
+    --seven: #0080ff;
+    --eight: #0000ff;
+    --nine: #8000ff;
+    --ten: #ff00ff;
+    --eleven: #ff0080;
+    --twelve: #ff0000;
+    --centerColor: #ff0000;*/
+  --infoColor1: #666;
+  --infoColor2: black;
+  --clockSize: 73vh; }
+
+* {
+  /*   //box-sizing: border-box; */
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: calc(var(--clockSize)/20); }
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0px auto;
+  background: var(--Gray);
+  overflow: hidden;
+  /*   border:1px solid red; */ }
+
+.clock {
+  position: relative;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  /*   border: 1px solid blue; */ }
+
+#indicatorRotator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  transform: translate(-50%, -50%);
+  opacity: .15;
+  /*  border: 1px solid green; */ }
+
+#indicators {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  transform: translate(-50%, -50%);
+  /*   border: 1px solid white; */ }
+
+#indicators .top {
+  /*   border: 2px solid white; */
+  /*   border: 2px solid #a3a3a3; */ }
+
+#indicators .bottom {
+  /*   border: 2px solid white; */
+  /*   border: 2px solid #a3a3a3;*/ }
+
+#center {
+  position: absolute;
+  width: calc(var(--clockSize)/2);
+  height: calc(var(--clockSize)/2);
+  border-radius: calc(var(--clockSize)/4);
+  /*  box-shadow: 0px, 0px, 20px, 20px; */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /*  display: none;*/
+  /*  border: 1px solid lightgray; */ }
+
+.twelveSix {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); }
+
+.oneSeven {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(30deg); }
+
+.twoEight {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(60deg); }
+
+.threeNine {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(90deg); }
+
+.fourTen {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(120deg); }
+
+.fiveEleven {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(150deg); }
+
+.top {
+  position: absolute;
+  /*  width: calc(var(--clockSize)/40);
+    height: calc(var(--clockSize)/5);
+    border-radius: calc(var(--clockSize)/60);*/
+  width: calc(var(--clockSize)/15);
+  height: calc(var(--clockSize)/5);
+  border-radius: calc(var(--clockSize)/30);
+  /*  border: 1px solid white; */
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0); }
+
+.bottom {
+  position: absolute;
+  /*  width: calc(var(--clockSize)/40);
+    height: calc(var(--clockSize)/5);
+    border-radius: calc(var(--clockSize)/60);*/
+  width: calc(var(--clockSize)/15);
+  height: calc(var(--clockSize)/5);
+  border-radius: calc(var(--clockSize)/30);
+  /*  border: 1px solid white; */
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, 0); }
+
+#one {
+  background: var(--Gray); }
+
+#two {
+  background: var(--Gray); }
+
+#three {
+  background: var(--Gray); }
+
+#four {
+  background: var(--Gray); }
+
+#five {
+  background: var(--Gray); }
+
+#six {
+  background: var(--Gray); }
+
+#seven {
+  background: var(--Gray); }
+
+#eight {
+  background: var(--Gray); }
+
+#nine {
+  background: var(--Gray); }
+
+#ten {
+  background: var(--Gray); }
+
+#eleven {
+  background: var(--Gray); }
+
+#twelve {
+  background: var(--Gray); }
+
+#displayTime {
+  position: absolute;
+  color: var(--infoColor1);
+  bottom: 2.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /*    display: none;*/ }
+
+#displayShift {
+  position: absolute;
+  color: var(--infoColor1);
+  top: 50%;
+  left: 50%;
+  transform: translate(-43%, 50%); }
+
+#displaySize {
+  position: absolute;
+  font-size: calc(var(--clockSize)/50);
+  color: var(--infoColor2);
+  bottom: 0.5%;
+  left: 0.5%;
+  display: none;
+  /*    transform: translate(-50%, 0);*/ }
+
+#displayCalculations {
+  position: absolute;
+  font-size: calc(var(--clockSize)/50);
+  color: var(--infoColor2);
+  bottom: 0.5%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: none; }
+
+/******************************************
+/* HELPER CLASSES
+/*******************************************/
+/* Clearfix */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
+
+.is-hidden {
+  display: none; }
+
+.is-visible {
+  display: block; }
+
+/******************************************
+/* ADDITIONAL STYLES                   
+/*******************************************/
+
+/*# sourceMappingURL=main.css.map */

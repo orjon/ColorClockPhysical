@@ -1,0 +1,213 @@
+/* 
+Project Name: Blank Template
+Client: Your Client
+Author: Your Name
+*/
+
+@import url('animation.css');
+@import url('icon-settings.css');
+@import url('variables.css');
+
+
+/******************************************
+/* LAYOUT                   
+/*******************************************/
+
+* {
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: calc(var(--clockSize)/20);
+  box-sizing: border-box;
+}
+
+
+img {
+  max-width: 100%;
+}
+
+body {
+  display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+  margin: 0px auto;
+  background: var(--Gray);
+  overflow: hidden; 
+}
+
+
+#title {
+  color: var(--colorTitle);
+/*  animation: titleGrow var(--speedAnimTitle) linear;*/
+}
+
+.clock {
+   position: relative;
+   width: (var(--clockSize));
+   height: (var(--clockSize));
+/*   border: 1px solid blue; */
+}
+
+
+#indicatorRotator {  
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: (var(--clockSize));
+  height: (var(--clockSize));
+  opacity: 0.0;
+/*  border: 1px solid green; */
+}
+
+#indicators {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: (var(--clockSize));
+  height: (var(--clockSize));
+  animation: indicatorSpin var(--speedAnimSpin) ease-out forwards;
+/*   border: 1px solid white; */
+}
+
+
+#center {
+  position: absolute;
+  width: calc(var(--clockSize)/2);
+  height: calc(var(--clockSize)/2);
+  border-radius: calc(var(--clockSize)/4);
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: centerAppear var(--speedAnimCenter) ease-out forwards;
+  animation-delay: 4.5s
+}
+
+.twelveSix {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: indicatorExpand var(--speedAnimGrow) ease-out;
+}
+
+.oneSeven {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(30deg);
+  animation: indicatorExpand var(--speedAnimGrow) ease-out;
+}
+
+.twoEight {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(60deg);
+  animation: indicatorExpand var(--speedAnimGrow) ease-out;
+}
+
+.threeNine {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  animation: indicatorExpand var(--speedAnimGrow) ease-out;
+}
+
+.fourTen {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(120deg);
+  animation: indicatorExpand var(--speedAnimGrow) ease-out;
+}
+
+.fiveEleven {
+  position: absolute;
+  width: var(--clockSize);
+  height: var(--clockSize);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(150deg);
+  animation: indicatorExpand var(--speedAnimGrow) ease-out;
+}
+
+.top{
+  position: absolute;
+  width: calc(var(--clockSize)/15);
+  height: calc(var(--clockSize)/5);
+  border-radius: calc(var(--clockSize)/30);
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  animation: indicatorGrow var(--speedAnimGrow) ease-out;
+/*  border: 1px solid white; */
+}
+
+.bottom {
+  position: absolute;
+  width: calc(var(--clockSize)/15);
+  height: calc(var(--clockSize)/5);
+  border-radius: calc(var(--clockSize)/30);
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  animation: indicatorGrow var(--speedAnimGrow) ease-out;
+/*  border: 1px solid white; */
+} 
+
+#displayTime {
+    position: absolute;
+    color: var(--infoColor1);
+    bottom: 1%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+
+#displayShift {
+    position: absolute;
+    color: var(--infoColor1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-43%, 50%);
+}
+
+
+
+#displaySize {
+    position: absolute;
+    font-size: calc(var(--clockSize)/50);
+    color: var(--infoColor2);
+    bottom: 0.5%;
+    left: 0.5%;
+    display: none;
+/*    transform: translate(-50%, 0);*/
+}
+
+
+#displayCalculations {
+    position: absolute;
+    font-size: calc(var(--clockSize)/50);
+    color: var(--infoColor2);
+    bottom: 0.5%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: none;
+}
+
+
+

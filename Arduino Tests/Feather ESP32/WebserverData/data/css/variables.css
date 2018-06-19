@@ -1,0 +1,21 @@
+:root {
+/*******************************************
+/* COLOURS
+/*******************************************/
+  --Gray: #949494;      /*Background color */
+  --colorTitle: white;  /*Intro text color */
+  --infoColor1: #666;   /*Clock time color */
+  --infoColor2: black;  /* Info bar color */
+
+/*******************************************
+/* Animation Speeds
+/*******************************************/
+  --clockSize: 73vh;
+
+/*******************************************
+/* Animation Speeds
+/*******************************************/
+  --speedAnimCenter: 2.5s;
+  --speedAnimGrow: 7.5s;
+  --speedAnimSpin: 7.5s;
+}
